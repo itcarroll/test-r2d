@@ -2,7 +2,7 @@ name: build
 on:
   push:
     paths:
-      - .github/workflows/build.yaml
+      - .github/workflows/build.yml
       - environment.yml
 concurrency:
   group: ${{ github.workflow }}
