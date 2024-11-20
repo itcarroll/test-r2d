@@ -1,0 +1,24 @@
+name: build
+on:
+  push:
+    paths:
+      - .github/workflows/build.yaml
+      - environment.yml
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - name: checkout files in repo
+      uses: actions/checkout@v4
+    - name: build with repo2docker
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ github.repository_owner }}
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_REGISTRY: ghcr.io
